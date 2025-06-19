@@ -79,15 +79,6 @@ class VaultPackageServiceProvider extends ServiceProvider
     protected function loadSecrets(): array
     {
         try {
-            // if (app()->environment('local')) {
-            //     // Stubbed secrets for local/dev
-            //     return [
-            //         "NIBSS_BVN_STAGING_CLIENT_ID" => "fjnsncwinwjcnss",
-            //         "NIBSS_BVN_STAGING_CLIENT_SECRET" => "fjncnsjcnwcnjwnc",
-            //         // Add more mock/test values if needed
-            //     ];
-            // }
-
             $mode = config('vault.mode', 'file');
 
             if ($mode === 'file') {
@@ -110,6 +101,11 @@ class VaultPackageServiceProvider extends ServiceProvider
 
     protected function loadFromFile(): array
     {
+        if (empty(config('vault.file_path'))) {
+            \Log::error("VaultPackage: 'vault.file_path' is required when using 'file' mode.");
+            return [];
+        }
+        
         $filePath = config('vault.file_path');
         $lines = @file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
@@ -133,6 +129,17 @@ class VaultPackageServiceProvider extends ServiceProvider
 
     protected function loadFromVaultWithToken(): array
     {
+        $required = ['vault.token', 'vault.vault_url', 'vault.vault_path'];
+
+        $missing = collect($required)->filter(function ($key) {
+            return empty(config($key));
+        });
+
+        if ($missing->isNotEmpty()) {
+            \Log::error("VaultPackage: Missing config keys for token mode: " . $missing->implode(', '));
+            return [];
+        }
+
         try {
             $token = config('vault.token');
             $path = config('vault.vault_path');
