@@ -1,5 +1,5 @@
 {
-    "name": "thetribe/laravel_vault",
+    "name": "thetribephotography/laravel_vault",
     "description": "A Laravel package that helps you easily integrate and manage secrets from HashiCorp Vault, with caching and env/config-style access.",
     "keywords": [
         "hash",
