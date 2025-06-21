@@ -9,9 +9,13 @@ Welcome to the **Laravel Vault Package** — your trusted sidekick for keeping s
 ✅ Seamless integration with Laravel 8 - 12
 
 ✅ Supports `.env`, `.json`, and remote Vault (KVv2) secrets
+
 ✅ Automatic config injection with fallback + caching 🔄
+
 ✅ Works with **multiple Vault paths or files**
+
 ✅ Simple `Vault::refresh()` method to reload secrets on the fly
+
 ✅ Easy config publishing & customisation
 
 ---
