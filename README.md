@@ -1,6 +1,6 @@
 # 🛡️ Laravel Vault Package
 
-Welcome to the **Laravel Vault Package** — your trusted sidekick for keeping secrets safe, cleanly organized, and instantly usable across your Laravel project. Whether you're working with static `.env` or `.json` files, or pulling secrets live from **HashiCorp Vault**, this package has your back 💼🔐
+Welcome to the **Laravel Vault Package** — your trusted sidekick for keeping secrets safe, cleanly organised, and instantly usable across your Laravel project. Whether you're working with static `.env` or `.json` files generated from your Vault Service, or pulling secrets live from **HashiCorp Vault**, this package has your back 💼🔐
 
 ---
 
@@ -11,7 +11,7 @@ Welcome to the **Laravel Vault Package** — your trusted sidekick for keeping s
 ✅ Automatic config injection with fallback + caching 🔄
 ✅ Works with **multiple Vault paths or files**
 ✅ Simple `Vault::refresh()` method to reload secrets on the fly
-✅ Easy config publishing & customization
+✅ Easy config publishing & customisation
 
 ---
 
@@ -29,7 +29,7 @@ composer require thetribephotography/laravel_vault
 php artisan vendor:publish --tag=vault-config
 ```
 
-You'll now see a `config/vault.php` file. This is your main control center 🧠
+You'll now see a `config/vault.php` file. This is your main control centre 🧠
 
 ---
 
