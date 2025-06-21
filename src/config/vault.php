@@ -2,21 +2,58 @@
 
 return [
 
-    'mode' => env('VAULT_MODE', 'file'), // or 'token'
+    /*
+    |--------------------------------------------------------------------------
+    | FILE MODE
+    |--------------------------------------------------------------------------
+    |  Which mode to use: 'file' or 'token'
+    */
 
-    'token' => env('VAULT_AUTH_TOKEN', null),
+    'mode' => env('VAULT_MODE', 'file'),
 
-    'vault_url' => env('VAULT_URL', 'http://127.0.0.1:8200'),
 
-    'vault_path' => env('VAULT_PATH', '/v1/secret/data/your-path'),
+    /*
+    |--------------------------------------------------------------------------
+    | FILE MODE SETTINGS
+    |--------------------------------------------------------------------------
+    */
+    'file_paths' => [
+        env('VAULT_SECRET_FILE_1', base_path('.env')),
+        env('VAULT_SECRET_FILE_2', base_path('.env'))
+    ],
 
-    'file_path' => env('VAULT_SECRET_FILE', base_path('.env')),
 
-    'cache_key' => 'CLOUD_KEYS',
+    /*
+    |--------------------------------------------------------------------------
+    | TOKEN MODE SETTINGS
+    |--------------------------------------------------------------------------
+    */
+    'token_sources' => [
+        [
+            'token' => env('VAULT_TOKEN'),
+            'path' => '/v1/secret/data/billing',
+            'url' => env('VAULT_URL'),
+        ],
+        [
+            'token' => env('VAULT_ALT_TOKEN'),
+            'path' => '/v1/secret/data/payments',
+            'url' => env('VAULT_URL'),
+        ],
+    ],
 
-    'cache_ttl' => 3600, // seconds
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Other Settings
+    |--------------------------------------------------------------------------
+    */
     'override_env' => env('VAULT_OVERRIDE_ENV', true),
+    'cache_key' => 'CLOUD_KEYS',
+    'cache_ttl' => 3600, //seconds
+
+
 
 
 
@@ -26,6 +63,10 @@ return [
     |--------------------------------------------------------------------------
     | Define how secrets from Vault should be injected into your Laravel config.
     | Keys on the left are Laravel config keys, values on the right are the Vault keys.
+    | 🧠 Developers(The Bad Guys👀) define this
+    |
+    | Format A: 'config.key' => 'vault_key'
+    | Format B: 'key' => 'vault_key'
     |
     | Example 1:
     |     'app.my_api_key' => 'MY_SECRET_KEY_FROM_VAULT',
@@ -41,7 +82,6 @@ return [
     |
 */
 
-    // 🧠 Developers(The Bad Guys👀) define this
     'map' => [
 
         // Example
