@@ -31,9 +31,9 @@ class VaultPackageServiceProvider extends ServiceProvider
         ], 'vault-config');
 
         // Load global helper
-        if (file_exists(__DIR__ . '/helpers.php')) {
-            require_once __DIR__ . '/helpers.php';
-        }
+        // if (file_exists(__DIR__ . '/helpers.php')) {
+        //     require_once __DIR__ . '/helpers.php';
+        // }
 
         // Auto-override config values from vault
         if (config('vault.override_env', true)) {
@@ -52,13 +52,6 @@ class VaultPackageServiceProvider extends ServiceProvider
             $this->fallbackToFileCacheIfMissing();
             $cacheKey = config('vault.cache_key', 'CLOUD_KEYS');
             $cachedKeys = \Illuminate\Support\Facades\Cache::get($cacheKey);
-
-            // $cachedKeys = $this->cacheTableExists()
-            //     ? \Illuminate\Support\Facades\Cache::get($cacheKey)
-            //     : null;
-            // if (!$this->cacheTableExists() && config('cache.default') === 'database') {
-            //     config(['cache.default' => 'file']);
-            // }
         }
 
         // Fallback to fresh load if cache empty
@@ -79,19 +72,11 @@ class VaultPackageServiceProvider extends ServiceProvider
     protected function loadSecrets(): array
     {
         try {
-            $mode = config('vault.mode', 'file');
-
-            if ($mode === 'file') {
-                return $this->loadFromFile();
-            }
-
-            if ($mode === 'token') {
-                return $this->loadFromVaultWithToken();
-            }
-
-            \Log::error("Vault mode '{$mode}' is not supported.");
-            return [];
-
+            return match (config('vault.mode')) {
+                'file' => $this->loadFromFiles(),
+                'token' => $this->loadFromVaultWithToken(),
+                default => [],
+            };
         } catch (\Throwable $e) {
             \Log::error("Vault load error: {$e->getMessage()}");
             return [];
@@ -99,77 +84,86 @@ class VaultPackageServiceProvider extends ServiceProvider
     }
 
 
-    protected function loadFromFile(): array
+
+    protected function loadFromFiles(): array
     {
-        if (empty(config('vault.file_path'))) {
-            \Log::error("VaultPackage: 'vault.file_path' is required when using 'file' mode.");
-            return [];
-        }
-        
-        $filePath = config('vault.file_path');
-        $lines = @file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $paths = config('vault.file_paths', []);
+        $secrets = [];
 
-        if (!$lines) {
-            \Log::error("Vault file not found or empty: {$filePath}");
-            return [];
-        }
+        foreach ($paths as $file) {
+            if (!file_exists($file)) {
+                \Log::warning("VaultPackage: File not found: {$file}");
+                continue;
+            }
 
-        $data = [];
+            $extension = pathinfo($file, PATHINFO_EXTENSION);
 
-        foreach ($lines as $line) {
-            if (str_contains($line, '=')) {
-                [$key, $value] = explode('=', $line, 2);
-                $data[trim($key)] = trim($value);
+            if ($extension === 'json') {
+                $content = file_get_contents($file);
+                $json = json_decode($content, true);
+
+                if (json_last_error() !== JSON_ERROR_NONE || !is_array($json)) {
+                    \Log::error("VaultPackage: Invalid JSON in file: {$file}");
+                    continue;
+                }
+
+                $secrets = array_merge($secrets, $json);
+            } else {
+                // Assume .env style (KEY=VALUE)
+                $lines = @file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+                foreach ($lines as $line) {
+                    if (str_contains($line, '=')) {
+                        [$key, $value] = explode('=', $line, 2);
+                        $secrets[trim($key)] = trim($value);
+                    }
+                }
             }
         }
 
-        return $data;
+        return $secrets;
     }
+
+
+
 
 
     protected function loadFromVaultWithToken(): array
     {
-        $required = ['vault.token', 'vault.vault_url', 'vault.vault_path'];
+        $sources = config('vault.token_sources', []);
+        $secrets = [];
 
-        $missing = collect($required)->filter(function ($key) {
-            return empty(config($key));
-        });
+        foreach ($sources as $source) {
+            $token = $source['token'] ?? null;
+            $path = $source['path'] ?? null;
+            $url = rtrim($source['url'] ?? '', '/') . $path;
 
-        if ($missing->isNotEmpty()) {
-            \Log::error("VaultPackage: Missing config keys for token mode: " . $missing->implode(', '));
-            return [];
-        }
-
-        try {
-            $token = config('vault.token');
-            $path = config('vault.vault_path');
-            $url = rtrim(config('vault.vault_url'), '/') . $path;
-
-            $response = retry(3, function () use ($token, $url) {
-                return \Illuminate\Support\Facades\Http::timeout(10)->withHeaders([
-                    'X-Vault-Token' => $token,
-                ])->get($url);
-            }, 1000);
-
-            if ($response->failed()) {
-                \Log::error("Failed to connect to Vault: " . $response->body());
-                return [];
+            if (!$token || !$path || !$url) {
+                \Log::error("VaultPackage: Missing token/path/url in a token source.");
+                continue;
             }
 
-            $json = $response->json();
+            try {
+                $response = retry(3, function () use ($token, $url) {
+                    return \Illuminate\Support\Facades\Http::timeout(10)->withHeaders([
+                        'X-Vault-Token' => $token,
+                    ])->get($url);
+                }, 1000);
 
-            if (!empty($json['data']['data'])) {
-                return $json['data']['data'];
+                if ($response->successful() && isset($response['data']['data'])) {
+                    $secrets = array_merge($secrets, $response['data']['data']);
+                } else {
+                    \Log::warning("VaultPackage: Empty or failed response from Vault for path: {$path}");
+                }
+            } catch (\Throwable $e) {
+                \Log::error("VaultPackage: Vault call error for path {$path} - {$e->getMessage()}");
             }
-
-            \Log::warning("Vault response missing data: " . json_encode($json));
-            return [];
-
-        } catch (\Throwable $e) {
-            \Log::error("Vault token mode error: {$e->getMessage()}");
-            return [];
         }
+
+        return $secrets;
     }
+
+
 
 
     public function refresh(): void
