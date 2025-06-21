@@ -4,6 +4,13 @@ Welcome to the **Laravel Vault Package** — your trusted sidekick for keeping s
 
 ---
 
+# What is Vault?
+
+Vault is a tool for securely storing and accessing tokens, passwords, certificates, encryption keys, and other sensitive data. 
+Kindly see More Here: https://github.com/hashicorp/vault-guides
+
+---
+
 ## 🚀 Features
 
 ✅ Seamless integration with Laravel 8 - 12
