@@ -2,14 +2,18 @@
 
 Easily integrate HashiCorp Vault secrets into your Laravel project with zero friction. This package allows you to manage secrets via Vault while maintaining Laravel's native `config('...')` access style — just like you would with `.env` files.
 
+
 ---
+
 
 # What is Vault?
 
 Vault is a tool for securely storing and accessing tokens, passwords, certificates, encryption keys, and other sensitive data.
 Kindly see More Here: [https://github.com/hashicorp/vault-guides](https://github.com/hashicorp/vault-guides)
 
+
 ---
+
 
 ## 🚀 Why Use This Package?
 
@@ -19,7 +23,9 @@ Managing secrets in Laravel shouldn't require rewriting your entire application 
 
 If you're using Laravel’s `config('app.secret_key')` or similar patterns, this package lets you continue doing that while the underlying secrets are pulled from Vault securely.
 
+
 ---
+
 
 ## 🔍 What Makes This Package Different?
 
