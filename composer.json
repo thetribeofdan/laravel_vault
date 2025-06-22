@@ -31,9 +31,15 @@
         {
             "name": "Daniel Fiyinfoluwa Egbeleke",
             "email": "fiyinfoluwaegbeleke@gmail.com",
-            "role": "Developer"
+            "role": "Developer",
+            "homepage": "https://github.com/thetribephotography"
         }
     ],
+    "homepage": "https://github.com/thetribephotography/laravel_vault",
+    "support": {
+        "issues": "https://github.com/thetribephotography/laravel_vault/issues",
+        "source": "https://github.com/thetribephotography/laravel_vault"
+    },
     "require": {
         "php": "^8.0",
         "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0"
