@@ -1,7 +1,3 @@
-# 🛡️ Laravel Vault Package
-
-Welcome to the **Laravel Vault Package** — your trusted sidekick for keeping secrets safe, cleanly organised, and instantly usable across your Laravel project. Whether you're working with static `.env` or `.json` files generated from your Vault Service, or pulling secrets live from **HashiCorp Vault**, this package has your back 💼🔐
-
 ---
 
 # What is Vault?
@@ -11,41 +7,67 @@ Kindly see More Here: https://github.com/hashicorp/vault-guides
 
 ---
 
-## 🚀 Features
+# 🔐 Laravel Vault Secrets Integration
 
-✅ Seamless integration with Laravel 8 - 12
-
-✅ Supports `.env`, `.json`, and remote Vault (KVv2) secrets
-
-✅ Automatic config injection with fallback + caching 🔄
-
-✅ Works with **multiple Vault paths or files**
-
-✅ Simple `Vault::refresh()` method to reload secrets on the fly
-
-✅ Easy config publishing & customisation
+Easily integrate HashiCorp Vault secrets into your Laravel project with zero friction. This package allows you to manage secrets via Vault while maintaining Laravel's native `config('...')` access style — just like you would with `.env` files.
 
 ---
 
-## 🛠️ Installation
+## 🚀 Why Use This Package?
 
-1. Add the package to your Laravel project:
+Managing secrets in Laravel shouldn't require rewriting your entire application just to integrate with HashiCorp Vault. This package was built to solve one simple but powerful problem:
+
+> ✅ **Seamlessly upgrade from `.env`-based config to Vault-based secret management — without touching how your app reads secrets.**
+
+If you're using Laravel’s `config('app.secret_key')` or similar patterns, this package lets you continue doing that while the underlying secrets are pulled from Vault securely.
+
+---
+
+## 🔍 What Makes This Package Different?
+
+### 🧩 1. Plug-and-Play with Laravel’s Config System
+
+You don't need to rewrite your codebase. Just map your Vault keys to Laravel config keys, and call them as you always have:
+
+```php
+config('app.my_api_key')
+```
+
+### ⚙️ 2. Two Powerful Modes of Integration
+
+| Mode           | Description                                                                                                                                                 |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **File Mode**  | Read secrets from one or more Vault-agent-generated files (supporting `.env`, `.txt`, `.json`, and more) — perfect for agent setups or Docker environments. |
+| **Token Mode** | Pull secrets directly from the Vault server using a token, supporting multiple paths and tokens. Great for dynamic secret retrieval.                        |
+
+### 🧠 3. Configurable, Flexible, and Cache-Aware
+
+* Supports **multiple file paths** or **multiple Vault token sources**
+* Maps secrets to Laravel config effortlessly
+* Uses Laravel's cache system to improve performance
+
+### 🪄 4. Transition-First Design
+
+Unlike other packages that require rigid integration styles or special syntax, this one was designed with **real-world Laravel projects** in mind — allowing teams to migrate without friction.
+
+---
+
+## 📦 Installation
 
 ```bash
 composer require thetribephotography/laravel_vault
 ```
 
-2. Publish the config file:
+If you want to publish the config file:
 
 ```bash
 php artisan vendor:publish --tag=vault-config
 ```
-
 You'll now see a `config/vault.php` file. This is your main control centre 🧠
 
 ---
 
-## ⚙️ Configuration
+## 🛠️ Configuration
 
 ### 1. Choose your mode
 
@@ -103,15 +125,15 @@ Use this when you want to connect to a live Vault instance using the Auth **toke
 Map secrets from your files or Vault into Laravel config using the `map` key:
 
 ```php
-'config.app_key' => 'APP_KEY',
-'config.mailgun.secret' => 'MAILGUN_SECRET',
+'app.app_key' => 'APP_KEY',
+'app.mailgun.secret' => 'MAILGUN_SECRET',
 ```
 
 Usage in your app:
 
 ```php
-config('config.app_key');
-config('config.mailgun.secret');
+config('app.app_key');
+config('app.mailgun.secret');
 ```
 
 ---
@@ -124,21 +146,21 @@ Need to reload your secrets on the fly (e.g. after token rotation or file update
 Vault::refresh();
 ```
 
-It will:
 
-* Clear existing cache
-* Reload from source
-* Reinject all mapped config values 🔁
+To force a reload and cache refresh of Vault secrets.
 
 ---
 
-## 🪵 Logging & Warnings
+## ⚠️ Laravel Cache Warning
 
-The package will log friendly messages when:
+If you're using `database` cache driver, make sure to run the default cache migration:
 
-* A Vault file path is missing ❌
-* A Vault token/path combo fails to load 🔒
-* A mapped key is missing ⚠️
+```bash
+php artisan cache:table
+php artisan migrate
+```
+
+Or switch to `file` or `redis` temporarily.
 
 ---
 
@@ -157,8 +179,7 @@ Inspired by a personal need to make secure secret integration feel effortless fo
 
 Massive Help by [@imambash6](https://github.com/imambash6)
 
----
 
 ## 📄 License
 
-MIT — feel free to improve, and contribute!
+MIT © 2025 [Daniel Fiyinfoluwa Egbeleke](https://github.com/thetribephotography)
