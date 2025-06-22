@@ -2,12 +2,12 @@
 
 # What is Vault?
 
-Vault is a tool for securely storing and accessing tokens, passwords, certificates, encryption keys, and other sensitive data. 
-Kindly see More Here: https://github.com/hashicorp/vault-guides
+Vault is a tool for securely storing and accessing tokens, passwords, certificates, encryption keys, and other sensitive data.
+Kindly see More Here: [https://github.com/hashicorp/vault-guides](https://github.com/hashicorp/vault-guides)
 
 ---
 
-# 🔐 Laravel Vault Secrets Integration
+# 🔐 Laravel Vault Package
 
 Easily integrate HashiCorp Vault secrets into your Laravel project with zero friction. This package allows you to manage secrets via Vault while maintaining Laravel's native `config('...')` access style — just like you would with `.env` files.
 
@@ -63,6 +63,7 @@ If you want to publish the config file:
 ```bash
 php artisan vendor:publish --tag=vault-config
 ```
+
 You'll now see a `config/vault.php` file. This is your main control centre 🧠
 
 ---
@@ -138,14 +139,13 @@ config('app.mailgun.secret');
 
 ---
 
-## 🧼 Runtime Refreshing
+## 🔁 Refreshing Secrets at Runtime
 
 Need to reload your secrets on the fly (e.g. after token rotation or file update)? Just call:
 
 ```php
 Vault::refresh();
 ```
-
 
 To force a reload and cache refresh of Vault secrets.
 
@@ -178,7 +178,6 @@ Built with 🖤 by [Daniel Fiyinfoluwa Egbeleke](mailto:fiyinfoluwaegbeleke@gmai
 Inspired by a personal need to make secure secret integration feel effortless for my Future Projects...Hope You Like It 🔐
 
 Massive Help by [@imambash6](https://github.com/imambash6)
-
 
 ## 📄 License
 
