@@ -52,7 +52,7 @@ config('app.my_api_key')
 
 ### 🪄 4. Transition-First Design
 
-Unlike other packages that require rigid integration styles or special syntax, this one was designed with **real-world Laravel projects** in mind — allowing teams to migrate without friction.
+Unlike other packages that require rigid integration styles or special syntax, this one was designed with **real-world Laravel projects** in mind — allowing teams to migrate without friction allowing keys to be called using the default Laravel config() mechanism.
 
 ---
 
