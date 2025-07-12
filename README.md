@@ -181,6 +181,16 @@ Or switch to `file` or `redis` temporarily.
 Built with 🖤 by [Daniel Fiyinfoluwa Egbeleke](mailto:fiyinfoluwaegbeleke@gmail.com) aka *The Bad Guy™*.
 Inspired by a personal need to make secure secret integration feel effortless for my Future Projects...Hope You Like It 🔐
 
+---
+
+## 💖 Support the Project
+
+If this package saved you hours or helped secure your Laravel app, consider sponsoring the project:
+
+👉 [Donate via Flutterwave](https://flutterwave.com/donate/43xu0cajjq1f)  
+🫶 Every contribution goes towards maintaining, improving, and supporting this tool for the community.
+
+
 Massive Help by [@imambash6](https://github.com/imambash6)
 
 ## 📄 License
