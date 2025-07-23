@@ -176,6 +176,12 @@ Or switch to `file` or `redis` temporarily.
 
 ---
 
+## Tutorials/Video Walkthrough
+
+* **Installation and Configuration** https://youtu.be/7ofXmhYIKmM?si=1D7Ad5QiQ5FcGOnX
+
+---
+
 ## 🙌 Credits
 
 Built with 🖤 by [Daniel Fiyinfoluwa Egbeleke](mailto:fiyinfoluwaegbeleke@gmail.com) aka *The Bad Guy™*.
