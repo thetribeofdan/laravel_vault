@@ -1,4 +1,4 @@
-# 🔐 Laravel Vault Package
+# 🔐 Laravel Hashicorp Vault Package
 
 Easily integrate HashiCorp Vault secrets into your Laravel project with zero friction. This package allows you to manage secrets via Vault while maintaining Laravel's native `config('...')` access style — just like you would with `.env` files.
 
@@ -6,9 +6,9 @@ Easily integrate HashiCorp Vault secrets into your Laravel project with zero fri
 ---
 
 
-# What is Vault?
+# What is HashiCorp Vault?
 
-Vault is a tool for securely storing and accessing tokens, passwords, certificates, encryption keys, and other sensitive data.
+HashiCorp Vault is a tool for securely storing and accessing tokens, passwords, certificates, encryption keys, and other sensitive data.
 Kindly see More Here: [https://github.com/hashicorp/vault-guides](https://github.com/hashicorp/vault-guides)
 
 
@@ -52,7 +52,7 @@ config('app.my_api_key')
 
 ### 🪄 4. Transition-First Design
 
-Unlike other packages that require rigid integration styles or special syntax, this one was designed with **real-world Laravel projects** in mind — allowing teams to migrate without friction allowing keys to be called using the default Laravel config() mechanism.
+Unlike other packages that require rigid integration styles or special syntax, this one was designed with **real-world Laravel projects** in mind — allowing teams to migrate without friction, allowing keys to be called using the default Laravel config() mechanism.
 
 ---
 
@@ -127,14 +127,14 @@ Use this when you want to connect to a live Vault instance using the Auth **toke
 
 ### 4. Mapping Secrets to Config 🗺️
 
-Map secrets from your files or Vault into Laravel config using the `map` key:
+Map secrets from your files or Vault into Laravel config using the `map` array in your `config/vault.php` file:
 
 ```php
 'app.app_key' => 'APP_KEY',
 'app.mailgun.secret' => 'MAILGUN_SECRET',
 ```
 
-Usage in your app:
+Usage in your Project’s code:
 
 ```php
 config('app.app_key');
