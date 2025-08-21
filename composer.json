@@ -1,49 +1,49 @@
 {
-    "name": "thetribephotography/laravel_vault",
-    "description": "A Laravel package that helps you easily integrate and manage secrets from HashiCorp Vault, with caching and env/config-style access.",
-    "keywords": [
-        "hash",
-        "config",
-        "hashicorp",
-        "vault",
-        "Laravel",
-        "secret",
-        "encryption",
-        "cybersecurity",
-        "security",
-        "env"
-    ],
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "VaultImplementation\\VaultPackage\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "VaultImplementation\\VaultPackage\\VaultPackageServiceProvider"
-            ]
-        }
-    },
-    "authors": [
-        {
-            "name": "Daniel Fiyinfoluwa Egbeleke",
-            "email": "fiyinfoluwaegbeleke@gmail.com",
-            "role": "Developer",
-            "homepage": "https://github.com/thetribephotography"
-        }
-    ],
-    "homepage": "https://github.com/thetribephotography/laravel_vault",
-    "support": {
-        "issues": "https://github.com/thetribephotography/laravel_vault/issues",
-        "source": "https://github.com/thetribephotography/laravel_vault"
-    },
-    "require": {
-        "php": "^8.0",
-        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0"
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+  "name": "thetribeofdan/laravel_vault",
+  "description": "A Laravel package that helps you easily integrate and manage secrets from HashiCorp Vault, with caching and env/config-style access.",
+  "keywords": [
+    "hash",
+    "config",
+    "hashicorp",
+    "vault",
+    "Laravel",
+    "secret",
+    "encryption",
+    "cybersecurity",
+    "security",
+    "env"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "VaultImplementation\\VaultPackage\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "VaultImplementation\\VaultPackage\\VaultPackageServiceProvider"
+      ]
+    }
+  },
+  "authors": [
+    {
+      "name": "Daniel Fiyinfoluwa Egbeleke",
+      "email": "fiyinfoluwaegbeleke@gmail.com",
+      "role": "Developer",
+      "homepage": "https://github.com/thetribeofdan"
+    }
+  ],
+  "homepage": "https://github.com/thetribephotography/laravel_vault",
+  "support": {
+    "issues": "https://github.com/thetribephotography/laravel_vault/issues",
+    "source": "https://github.com/thetribephotography/laravel_vault"
+  },
+  "require": {
+    "php": "^8.0",
+    "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }
