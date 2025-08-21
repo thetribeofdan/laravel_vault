@@ -59,7 +59,7 @@ Unlike other packages that require rigid integration styles or special syntax, t
 ## 📦 Installation
 
 ```bash
-composer require thetribephotography/laravel_vault
+composer require thetribeofdan/laravel_vault
 ```
 
 If you want to publish the config file:
