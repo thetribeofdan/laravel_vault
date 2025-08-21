@@ -35,10 +35,10 @@
       "homepage": "https://github.com/thetribeofdan"
     }
   ],
-  "homepage": "https://github.com/thetribephotography/laravel_vault",
+  "homepage": "https://github.com/thetribeofdan/laravel_vault",
   "support": {
-    "issues": "https://github.com/thetribephotography/laravel_vault/issues",
-    "source": "https://github.com/thetribephotography/laravel_vault"
+    "issues": "https://github.com/thetribeofdan/laravel_vault/issues",
+    "source": "https://github.com/thetribeofdan/laravel_vault"
   },
   "require": {
     "php": "^8.0",
