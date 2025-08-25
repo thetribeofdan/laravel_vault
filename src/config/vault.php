@@ -79,14 +79,14 @@ return [
     | ⚙️ General Settings
     |--------------------------------------------------------------------------
     | 'override_env' → Should secrets override your Laravel config? This Lets the package know you want to
-    |                   Inject secrets into your config so you can call it like this: config('app.api_key')
-    | 'cache_key'    → Cache key used for storing loaded secrets
+    |                   Inject secrets into your config so you can call it like this: config('app.api_key').
+    |                   This Is Important For Making Secrets mapped through the package Accessible Via
+    |                   Laravel's config() Helper.
     | 'cache_ttl'    → Cache duration in seconds (default: 1 hour)
     */
 
     'override_env' => env('VAULT_OVERRIDE_ENV', true),
-    'cache_key' => 'CLOUD_KEYS',
-    'cache_ttl' => 3600, //seconds
+    'cache_ttl' => 3600,
 
 
 
